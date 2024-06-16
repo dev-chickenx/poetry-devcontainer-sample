@@ -1,23 +1,36 @@
-# Sphinx documentation
-docs/_build/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# PyBuilder
-target/
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
 # pyenv
 # Pythonバージョン管理ツールであるpyenvに関連するディレクトリ
 .python-version
-
-# pipenv
-# pipenvで生成される環境固有の設定ファイル
-Pipfile.lock
 
 # poetry
 # Poetryが生成する仮想環境ディレクトリとlockファイル
@@ -29,14 +42,6 @@ ENV/
 env.bak/
 ENV.bak/
 
-# MyPy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
 # vscode settings
 .vscode/
 
@@ -45,12 +50,3 @@ dmypy.json
 *.swp
 *.swo
 *.sublime-workspace
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
