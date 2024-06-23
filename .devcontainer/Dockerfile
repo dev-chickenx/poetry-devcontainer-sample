@@ -1,12 +1,14 @@
+# ベースイメージの指定
 FROM mcr.microsoft.com/devcontainers/base:jammy
-# FROM mcr.microsoft.com/devcontainers/base:jammy
 
+# 環境変数の設定
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=vscode
+ARG PYTHON_VERSION=3.11
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    && apt-get update \
-    && apt-get install -y build-essential --no-install-recommends make \
+# システムパッケージのインストール
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
         ca-certificates \
         git \
         libssl-dev \
@@ -23,26 +25,17 @@ RUN DEBIAN_FRONTEND=noninteractive \
         libxml2-dev \
         libxmlsec1-dev \
         libffi-dev \
-        liblzma-dev
+        liblzma-dev\
+        python${PYTHON_VERSION} python3-pip \
+        bash-completion \
+    && ln -s /usr/bin/python3 /usr/bin/python
 
-# Python and poetry installation
+# ユーザーの設定
 USER $USER
 ARG HOME="/home/$USER"
-ARG PYTHON_VERSION=3.11
-# ARG PYTHON_VERSION=3.10
 
-ENV PYENV_ROOT="${HOME}/.pyenv"
-ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${HOME}/.local/bin:$PATH"
-
-RUN echo "done 0" \
-    && curl https://pyenv.run | bash \
-    && echo "done 1" \
-    && pyenv install ${PYTHON_VERSION} \
-    && echo "done 2" \
-    && pyenv global ${PYTHON_VERSION} \
-    && echo "done 3" \
-    && curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry config virtualenvs.in-project true \
-    && echo "done 4" \
-    && poetry completions bash >> ~/.bashrc \
-    && echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
+# poetryのインストール & アクティベート
+ENV PATH="${HOME}/.local/bin:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python3 - \
+&& poetry config virtualenvs.in-project true \
+&& echo 'source ./back/.venv/bin/activate' >> ~/.bashrc
